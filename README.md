@@ -1,7 +1,3 @@
-# rlos
-RLOS Relativistic Line of Sight, time-resolved imaging of model astrophysical jets.
-Other than RLOS, rest of included .pro routines are attached to PLUTO astrophysical code, by A. Mignone.
-init.c based on an example jet from PLUTO code, by A. Mignone. Code description is provided in the included relevant scientific paper preprint.
 
 RLOS version 1.15.1, by T. Smponias, 2015-2018
 
@@ -9,14 +5,14 @@ This is  Relativistic Line Of Sight (RLOS), released under the LGPL-3.0-or-later
 
 Project website: https://github.com/teoxxx/rlos
 
-Lamguage: IDL, or GDL
+Language: IDL, or GDL
 
 
 **************************************************************************************************************
 
 What’s New
 
-This version of RLOS is able to produce a special-relativistic time-delayed image of a model relativistic astrophysical systemm, especially of a jet. 
+This version of RLOS is able to produce a special-relativistic, time-delayed image, of a model relativistic astrophysical system, such as a jet. 
 
 RLOS supports data input from the PLUTO hydrocode (dbl or vtk formats). It may also be adapted to employ those same data formats from another hydrocode. A steady-state model setup is also included inert, and can be activated when necessary. 
 
@@ -28,7 +24,7 @@ You can run RLOS 1.15.1 on a system configured in a number of ways. Regardless o
 
 .Data output from a hydrocode in dbl (preferably) or vtk format. Also, other accompanying files of the data output.
 
-.Required software to load those data into RLOS. In this implementation, it consists of PLUTO's attached IDL suite of routines, mainly pload.pro. The pload.pro routine will call further accompanying routines.
+.Required software to load those data into RLOS. In this implementation, it consists of PLUTO's attached IDL suite of routines, pload.pro. The pload.pro routine will call further accompanying routines, which also need to be present. These are located in the PLUUTO distribuution, under ..../Tools/IDL/.
 
 .The external parameter file of RLOS: rlos_params.txt.
 
@@ -58,6 +54,7 @@ The following enhancements are now available:
 
 1 RLOS may or may not display debug comments during execution, depending on a setting in the rlos_params.txt file.
 2 Parameter values from the input parameter text file now appear automatically as annotations on the final synthetic image.
+3 Datapath string contains path to data. pload.pro, PLUTO's IDL tools, rlos itself and finally hydro data should be in same dir for running rlos.
 
 
 Deprecated features
@@ -65,6 +62,10 @@ Deprecated features
 The following features are being marked as deprecated in this release.
 
 It is no longer necessary to manually adjust RLOS grid dimensions in order to match the hydrocodes's ones, as it is now done automatically.
+
+Pload no longer has paths inside it, uses dir argument instead for param passing from mother program rlos.
+
+Proc and functions used for xrays are now commented out. 
 
 
 
@@ -102,15 +103,10 @@ II. Then we open RLOS and EDIT THE PATH NEAR THE BEGINNING, called datapath. We 
 
 ;*************************************** 
 DATAPATH='Q:\gitstuff\tempy210818SMALL';REPLACE WITH YOUR PATH!
-
 cd, datapath
-
 GDL_DIR='C:\Program Files (x86)\gnudatalanguage\gdlde'
-
 PATH=!PATH+'C:\Program Files (x86)\gnudatalanguage\gdlde\'
-
 !PATH=!PATH+datapath
-
 pload, 1, dir=datapath
 ;***************************************
 
@@ -122,15 +118,10 @@ III. Then please execute the first few lines of RLOS, in order to call and execu
 
 ;*************************************** 
 DATAPATH='Q:\gitstuff\tempy210818SMALL'
-
 cd, datapath
-
 GDL_DIR='C:\Program Files (x86)\gnudatalanguage\gdlde'
-
 PATH=!PATH+'C:\Program Files (x86)\gnudatalanguage\gdlde\'
-
 !PATH=!PATH+datapath
-
 pload, 1, dir=datapath
 ;***************************************
 
@@ -142,97 +133,56 @@ The rest of the params in rlos_params.txt should be edited according to the desi
 
 
 
-V. Please compile RLOS and then run it. The synthetic image should emerge at the end of the execution. If debug output is desired, then please enable the relevant switch in the parameter file (debug_comments: set it, in the line that follows it, to 0).
+V. Please compile RLOS and then run it. The synthetic image should emerge at the end of the execution. If debug output is desired, then please enable the relevant switch in the parameter file (debug_comments: set it, in the line that follows it, to 1).
 
 *******************************************************************************************
 
 rlos_params.txt
 
-The contents of the parameter file are briefly explained here. Example values are given, for a sample run. Please adjust according to your model run. For more physical details, please see the relevant scientific paper of RLOS. 
+The contents of the parameter file are briefly explained here. Example values are given, for a sample run. Please adjust according to your model run. For more physical details, please see the relevant scientific paper of RLOS. Note that only odd lines (2,4,6,...), from this parameter file, are used by RLOS. 
 
  
-datapath (filesystem location of both hydro data and rlos) Entry IS INERT AT THE MOMENT!    
-
+datapath (filesystem location of both hydro data and rlos) Entry IS INERT AT THE MOMENT, yet please do set it up)    
 'Q:\gitstuff\tempy210818SMALL'
-
 conditional_stop (0=NO, 1=YES: use stops along the execution line) 
-
 0
-
 debug_comments (0=NO, 1=YES: show debug interim results during execution)
-
 0
-
 sfactor_external (pload's shrink factor: reduces imaging grid resolution, please see pload.pro for more on this)
-
 1.0
-
-speedtweakfactor_external (ts speadtweak factor, please see paper)
-
+speedtweakfactor_external (ts speadtweak factor, globally multiplies matter speed, please see paper)
 1.0
-
-clight_override_external (0=NO natural clight value, 1=YES: override clight using clight preset value) 
-
+clight_override_external (0=NO natural ray speed clight value in cellls per hydro sec, 1=YES: override clight using clight preset value) 
 0
-
 clight_preset_external (clight override value, used only when override is active above)
-
 0.1
-
 jet_norm_velocity_external (jet nominal speed, as set in PLUTO.)
-
 0.8
-
 shotmin_external (MINIMUM snapshot to be loaded to RLOS)
-
 2
-
 shotmax_external (MAXIMUM snapshot to be loaded to RLOS)
-
 22
-
-phi2_external (ANGLE 2)
-
+phi2_external (ANGLE 2: elevation)
 0.05D
-
-phi1_external (ANGLE 1)
-
+phi1_external (ANGLE 1: azimuth)
 1.57D
-
 freqshiftchoice_external (FS SWITCH, 0 is off, 1 is on. See paper for details.)
-
 0
-
 dopplerchoice_external (DB switch, 0 is off, 1 is on. See paper for details.)
-
 1.0
-
 alphaindex_external (The spectral index of the presumed spectrum for the imaged jet system.)
-
 2.0
-
 nobs_external (Observing frequency. This is not used for now, since only density causes emission)
-
 8000000000.0
-
-NLONG_external  (max grid length. PLese set to a higher value than the grid largest length size.)
-
+NLONG_external  (max grid length. Please set to a higher value than the grid largest length size.)
 150.0
-
 plutolength_external (hydro model length unit in CGS cm)
-
 10000000000
-
 plutospeed_external (hydrocode speed unit in CGS cm/s)
-
 30000000000
-
 plutodensity_external (hydrocode density unit in CGS g/cm3)
-
 0.00000000000000000000000167
-
 plutocelllength_external (hydrocode cell length in CGS cm)
-
 10000000000
 
 
@@ -247,3 +197,4 @@ Troubleshooting.
 3. The combination of parameters in rlos_params.txt should correspond to a physically realistic setup. For example, they should NOT produce velocities higher than c, such as when ts=10 and ujet(injected)=0.25c. Please see the relevant paper! 
 
 3. The considerable power of IDL/GDL can be used to improve the presentation and even production of results, but care should be exercised when editing RLOS, in order to not disturb the correct execution of the program. 
+
