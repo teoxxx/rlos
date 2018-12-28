@@ -138,7 +138,7 @@ V. Please compile RLOS and then run it. The synthetic image should emerge at the
 
 rlos_params.txt
 
-The contents of the parameter file are briefly explained here. Example values are given, for a sample run. Please adjust according to your model run. For more physical details, please see the relevant scientific paper of RLOS. Note that only odd lines (2,4,6,...), from this parameter file, are used by RLOS. 
+The contents of the parameter file are briefly explained here. Example values are given, for a sample run. Please adjust according to your model run. For more physical details, please see the relevant scientific paper of RLOS. Note that only odd lines (2, 4, 6, ...), from this parameter file, are used by RLOS. 
 
  
 datapath (filesystem location of both hydro data and rlos) Entry IS INERT AT THE MOMENT, yet please do set it up)    
