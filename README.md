@@ -101,12 +101,19 @@ A simple way to do the above is to first run PLUTO, with .dbl data output, and t
 II. Then we open RLOS and EDIT THE PATH NEAR THE BEGINNING, called datapath. We set the name of the path to: the directory of PLUTO data and RLOS. The first line of the following code portion should be edited, within RLOS:
 
 ;*************************************** 
+
 DATAPATH='Q:\gitstuff\tempy210818SMALL';REPLACE WITH YOUR PATH!
+
 cd, datapath
+
 GDL_DIR='C:\Program Files (x86)\gnudatalanguage\gdlde'
+
 PATH=!PATH+'C:\Program Files (x86)\gnudatalanguage\gdlde\'
+
 !PATH=!PATH+datapath
+
 pload, 1, dir=datapath
+
 ;***************************************
 
 
@@ -116,12 +123,19 @@ Therefore: Please set, within RLOS, datapath='....', where .... is the filesyste
 III. Then please execute the first few lines of RLOS, in order to call and execute pload.pro, which comes with PLUTO, at least once. This is a requirement of pload, and loads some hydrocode data. Those lines should look similar to the following: (datapath should be changed to your own location of PLUTO data, etc)
 
 ;*************************************** 
+
 DATAPATH='Q:\gitstuff\tempy210818SMALL'
+
 cd, datapath
+
 GDL_DIR='C:\Program Files (x86)\gnudatalanguage\gdlde'
+
 PATH=!PATH+'C:\Program Files (x86)\gnudatalanguage\gdlde\'
+
 !PATH=!PATH+datapath
+
 pload, 1, dir=datapath
+
 ;***************************************
 
 IV. Please edit the parameter file rlos_params.txt in order to setup RLOS for the run. 
@@ -141,49 +155,89 @@ rlos_params.txt
 The contents of the parameter file are briefly explained here. Example values are given, for a sample run. Please adjust according to your model run. For more physical details, please see the relevant scientific paper of RLOS. Note that only odd lines (2,4,6,...), from this parameter file, are used by RLOS. 
 
  
-datapath (filesystem location of both hydro data and rlos) Entry IS INERT AT THE MOMENT, yet please do set it up)    
+datapath (filesystem location of both hydro data and rlos) Entry IS INERT AT THE MOMENT, yet please do set it up)   
+
 'Q:\gitstuff\tempy210818SMALL'
+
 conditional_stop (0=NO, 1=YES: use stops along the execution line) 
+
 0
+
 debug_comments (0=NO, 1=YES: show debug interim results during execution)
+
 0
+
 sfactor_external (pload's shrink factor: reduces imaging grid resolution, please see pload.pro for more on this)
+
 1.0
+
 speedtweakfactor_external (ts speadtweak factor, globally multiplies matter speed, please see paper)
+
 1.0
+
 clight_override_external (0=NO natural ray speed clight value in cellls per hydro sec, 1=YES: override clight using clight preset value) 
+
 0
+
 clight_preset_external (clight override value, used only when override is active above)
+
 0.1
+
 jet_norm_velocity_external (jet nominal speed, as set in PLUTO.)
+
 0.8
+
 shotmin_external (MINIMUM snapshot to be loaded to RLOS)
+
 2
+
 shotmax_external (MAXIMUM snapshot to be loaded to RLOS)
+
 22
+
 phi2_external (ANGLE 2: elevation)
+
 0.05D
+
 phi1_external (ANGLE 1: azimuth)
+
 1.57D
+
 freqshiftchoice_external (FS SWITCH, 0 is off, 1 is on. See paper for details.)
+
 0
+
 dopplerchoice_external (DB switch, 0 is off, 1 is on. See paper for details.)
+
 1.0
+
 alphaindex_external (The spectral index of the presumed spectrum for the imaged jet system.)
+
 2.0
+
 nobs_external (Observing frequency. This is not used for now, since only density causes emission)
+
 8000000000.0
+
 NLONG_external  (max grid length. Please set to a higher value than the grid largest length size.)
+
 150.0
+
 plutolength_external (hydro model length unit in CGS cm)
-10000000000
-plutospeed_external (hydrocode speed unit in CGS cm/s)
-30000000000
-plutodensity_external (hydrocode density unit in CGS g/cm3)
-0.00000000000000000000000167
-plutocelllength_external (hydrocode cell length in CGS cm)
+
 10000000000
 
+plutospeed_external (hydrocode speed unit in CGS cm/s)
+
+30000000000
+
+plutodensity_external (hydrocode density unit in CGS g/cm3)
+
+0.00000000000000000000000167
+
+plutocelllength_external (hydrocode cell length in CGS cm)
+
+10000000000
 
 *******************************************************************************************
 
