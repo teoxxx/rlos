@@ -1,4 +1,3 @@
-
 RLOS version 1.15.1, by T. Smponias, 2015-2018
 
 This is  Relativistic Line Of Sight (RLOS), released under the LGPL-3.0-or-later licence. It is a program that produces synthetic, time-delayed images of model relativistic astrophysical systems. It crosses with parallel lines of sight the model system, resulting to the synthetic image. The geometry of the model system may be either input manually, for simpler geometries that are steady-state. Or RLOS may run on the data output of a time-dependent hydrocode, which is the case in this version of the software. More specifically, RLOS is currently optimized to run on the results of PLUTO, written by A. Mignone and his team. There are two main source code files in RLOS, for imaging on two different planes, called XZ and YZ respectively.
